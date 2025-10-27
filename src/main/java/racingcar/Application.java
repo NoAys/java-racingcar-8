@@ -20,5 +20,15 @@ public class Application {
         validation(names);
         return names;
     }
+
+    // 자동차 이름 유효성 검사
+    private static void validation(List<String> names){
+        for (String name : names) {
+            // 자동차 이름 이 빈 문자열인지, 5자가 넘어가는지 검사 후 예외 처리
+            if (name.isBlank() || name.length() > 5) {
+                throw new IllegalArgumentException();
+            }
+        }
+    }
 }
 
