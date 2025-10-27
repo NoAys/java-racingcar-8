@@ -25,6 +25,9 @@ public class Application {
             printRoundResult(cars);
         }
 
+        // 최종 우승자 출력
+        winners(cars);
+
     }
 
     // 자동차 이름 입력
@@ -76,6 +79,21 @@ public class Application {
             System.out.println(car.getName() + " : " + "-".repeat(car.getPosition()));
         }
         System.out.println();
+    }
+
+    // 최종 우승자 출력
+    private static void winners(List<Car> cars) {
+        int max = cars.stream()
+                .mapToInt(Car::getPosition)
+                .max()
+                .orElse(0);
+
+        String winners = cars.stream()
+                .filter(c -> c.getPosition() == max)
+                .map(Car::getName)
+                .collect(Collectors.joining(", "));
+
+        System.out.println("최종 우승자 : " + winners);
     }
 
     // 자동차 클래스 생성
