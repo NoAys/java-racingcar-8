@@ -70,6 +70,14 @@ public class Application {
         }
     }
 
+    // 출력
+    private static void printRoundResult(List<Car> cars){
+        for (Car car : cars) {
+            System.out.println(car.getName() + " : " + "-".repeat(car.getPosition()));
+        }
+        System.out.println();
+    }
+
     // 자동차 클래스 생성
     static class Car {
         private final String name;
