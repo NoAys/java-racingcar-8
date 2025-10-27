@@ -14,7 +14,7 @@ public class Application {
         // 시도할 횟수 입력
         int tryCount = readTryCount();
 
-        List<Car> cars = carNames.Stream()
+        List<Car> cars = carNames.stream()
                 .map(Car::new)
                 .collect(Collectors.toList());
 
@@ -60,6 +60,13 @@ public class Application {
         // 횟수가 숫자가 아닐경우
         } catch (NumberFormatException e){
             throw new IllegalArgumentException();
+        }
+    }
+
+    // 게임 로직
+    private static void moveAll(List<Car> cars){
+        for (Car car : cars){
+            car.move();
         }
     }
 
