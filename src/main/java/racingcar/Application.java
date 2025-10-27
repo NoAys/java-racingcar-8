@@ -3,13 +3,27 @@ package racingcar;
 import camp.nextstep.edu.missionutils.Console;
 import camp.nextstep.edu.missionutils.Randoms;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Application {
     public static void main(String[] args) {
         // TODO: 프로그램 구현
 
+        // 자동차 이름 입력
         List<String> carNames = readCarNames();
+        // 시도할 횟수 입력
         int tryCount = readTryCount();
+
+        List<Car> cars = carNames.Stream()
+                .map(Car::new)
+                .collect(Collectors.toList());
+
+        // 게임 진행
+        System.out.println("\n실행결과");
+        for (int i = 0; i < tryCount; i++){
+            moveAll(cars);
+            printRoundResult(cars);
+        }
 
     }
 
@@ -47,6 +61,32 @@ public class Application {
         } catch (NumberFormatException e){
             throw new IllegalArgumentException();
         }
+    }
+
+    // 자동차 클래스 생성
+    static class Car {
+        private final String name;
+        private int position = 0;
+
+        public Car (String name){
+            this.name = name;
+        }
+
+        public void move() {
+            int random = Randoms.pickNumberInRange(0, 9);
+            if (random >= 4){
+                position++;
+            }
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public int getPosition() {
+            return position;
+        }
+
     }
 }
 
