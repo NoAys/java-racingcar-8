@@ -9,6 +9,7 @@ public class Application {
         // TODO: 프로그램 구현
 
         List<String> carNames = readCarNames();
+        int tryCount = readTryCount();
 
     }
 
@@ -28,6 +29,23 @@ public class Application {
             if (name.isBlank() || name.length() > 5) {
                 throw new IllegalArgumentException();
             }
+        }
+    }
+
+    // 시도 횟수 입력
+    private static int readTryCount(){
+        System.out.println("시도할 횟수는 몇 회인가요?");
+        String input = Console.readLine().trim();
+        try {
+            int count = Integer.parseInt(input);
+            // 시도할 횟수가 1보다 작을경우
+            if (count <= 0){
+                throw new IllegalArgumentException();
+            }
+            return count;
+        // 횟수가 숫자가 아닐경우
+        } catch (NumberFormatException e){
+            throw new IllegalArgumentException();
         }
     }
 }
