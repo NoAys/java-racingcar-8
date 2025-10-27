@@ -14,9 +14,7 @@ public class Application {
         // 시도할 횟수 입력
         int tryCount = readTryCount();
 
-        List<Car> cars = carNames.stream()
-                .map(Car::new)
-                .collect(Collectors.toList());
+        List<Car> cars = createCars(carNames);
 
         // 게임 진행
         System.out.println("\n실행결과");
@@ -42,10 +40,13 @@ public class Application {
     // 자동차 이름 유효성 검사
     private static void validation(List<String> names){
         for (String name : names) {
-            // 자동차 이름 이 빈 문자열인지, 5자가 넘어가는지 검사 후 예외 처리
-            if (name.isBlank() || name.length() > 5) {
-                throw new IllegalArgumentException();
-            }
+            validateName(name);
+        }
+    }
+
+    private static void validateName(String name) {
+        if (name.isBlank() || name.length() > 5) {
+            throw new IllegalArgumentException();
         }
     }
 
@@ -53,20 +54,32 @@ public class Application {
     private static int readTryCount(){
         System.out.println("시도할 횟수는 몇 회인가요?");
         String input = Console.readLine().trim();
+        return parseTryCount(input);
+    }
+
+    private static int parseTryCount(String input) {
         try {
             int count = Integer.parseInt(input);
-            // 시도할 횟수가 1보다 작을경우
-            if (count <= 0){
-                throw new IllegalArgumentException();
-            }
+            validateTryCount(count);
             return count;
-        // 횟수가 숫자가 아닐경우
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    private static void validateTryCount(int count) {
+        if (count <= 0) {
             throw new IllegalArgumentException();
         }
     }
 
     // 게임 로직
+    private static List<Car> createCars(List<String> carNames) {
+        return carNames.stream()
+                .map(Car::new)
+                .collect(Collectors.toList());
+    }
+
     private static void moveAll(List<Car> cars){
         for (Car car : cars){
             car.move();
